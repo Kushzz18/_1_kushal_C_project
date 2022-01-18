@@ -19,7 +19,7 @@ struct pd
 	double Ph_no,Phno,UID;
 	int train_num;
 	int num_of_seats,RID;
-}passdetails[10],pd1[10],pd2;
+}passdetails,pd1;
 
 struct billpay
 {
@@ -134,69 +134,59 @@ int main()
 
 void details()
 {
-	int i,ag,m,year,d;
-	double Phno,UID;
-	int train_num,num_of_seats;
-    int a1, a2, b, c,RID; 
-	int x = 0,  e, r;
-    char o, gen[6], confirm;
-    char val[20], gender[6];
 	FILE *fp,*fq;
-	fp=fopen("Railway_Reservation.txt","r+");
-    if (fp==NULL)
-    {
-       fp=fopen("Railway_Reservation.txt","w+");
-
-       if (fp==NULL)
+	fp=fopen("Railway_Reservation.txt","a+");
+	if(fp==NULL)
 	{
 	   puts("File cannot be opened ");
 	   exit(0);
 	}
-	}
-	fq=fopen("Railway_Reservation1.txt","r+");
+	fq=fopen("Railway_Reservation1.txt","a+");
     if (fq==NULL)
     {
-       fq=fopen("Railway_Reservation1.txt","w+");
-
-       if (fq==NULL)
-	{
 	   puts("File cannot be opened ");
 	   exit(0);
 	}
-	}
+	int i,ag,m,year,d;
+	double Phno,UID;
+	int train_num;
+    int a1, a2, b, c,RID; 
+	int x = 0,  e, r;
+    char o, gen[6], confirm,another;
+    char val[20], gender[6];
 	system("cls");
 	printf("Enter Number Of Passengers: ");
 	fflush(stdin);
     scanf("%d", &j);
-	for (i = 0; i < j; i++) 
+	another='y';
+	while(another=='y'|| another=='Y')
 	{
-        printf("\nEnter the Name of Passenger %d: ", i+1);
+        printf("\nEnter the Name of Passenger: ");
         fflush(stdin);
-        gets(passdetails[i].val);
-        printf("\nEnter the Gender of Passenger %d(Male/Female): ", i+1);
+        gets(passdetails.val);
+        printf("\nEnter the Gender of Passenger(Male/Female): ");
         fflush(stdin);
-        gets(passdetails[i].gender);
-        printf("\nEnter the Age of Passenger %d: ", i+1);
+        gets(passdetails.gender);
+        printf("\nEnter the Age of Passenger: ");
         fflush(stdin);
-        scanf("%d",&passdetails[i].ag);
-        printf("\nEnter the Phone number of Passenger %d: ", i+1);
+        scanf("%d",&passdetails.ag);
+        printf("\nEnter the Phone number of Passenger: ");
         fflush(stdin);
-        scanf("%lf",&passdetails[i].Phno);
+        scanf("%lf",&passdetails.Phno);
         printf("\nEnter the date of reservation(dd/mm/yy): ");
         fflush(stdin);
-    	scanf("%d/%d/%d",&passdetails[i].d,&passdetails[i].m,&passdetails[i].year);
-        printf("\nPlease select Unique ID(Citizenship Number/ Passport Number) of Passenger %d: ", i+1);
+    	scanf("%d/%d/%d",&passdetails.d,&passdetails.m,&passdetails.year);
+        printf("\nPlease enter Unique ID(Citizenship Number/ Passport Number) of Passenger: ");
         fflush(stdin);
-        scanf("%lf", &passdetails[i].UID);
+        scanf("%lf", &passdetails.UID);
+        printf("\nReceipt Id: ");
+        fflush(stdin);
+        scanf("%d",&passdetails.RID);
+        fwrite(&passdetails,sizeof(passdetails),1,fp);
+        printf("\nAdd another Record(y/n)-: ");
+	 	another=getche();
 	}
-	c=getUniqueID();
-    pd2.RID=c;
-    bp.RID1= pd2.RID;
-    printf("\nYour Receipt Id -: %d",bp.RID1);
-	fwrite(&passdetails,sizeof(passdetails),1,fp);
-	printf("\n\nEnter Number of seats:> ");
-	fflush(stdin);
-	scanf("%d",&num_of_seats);
+	bp.RID1 = passdetails.RID;
 	printf("\n\n>>Press Enter To View Available Trains<< ");
 	getch();
 	system("cls");
@@ -209,10 +199,7 @@ void details()
 		{
         case 1001:
 		 {
-            strcpy(train,"Red Lines Express");
-            strcpy(station,"Boston Station");
-            time1 = 9;
-            time2 = 00;
+            
             a1 = 2099;
             a2 = 1560;
             // Calling cal() function
@@ -221,11 +208,9 @@ void details()
             d = cal(a1, a2, j);
             printf("Total Bill Amount: Rs %d \n",d); 
         }break;
-        case 1002: {
-            strcpy(train,"Red Lines Express");
-            strcpy(station,"Manhattan Station");
-            time1 = 12;
-            time2 = 00;
+        case 1002:
+		 {
+            
             a1 = 2099;
             a2 = 1560;
   
@@ -234,11 +219,9 @@ void details()
             d = cal(a1, a2, j);
             printf("Total Bill Amount: Rs %d \n",d);
         } break;
-        case 1003: {
-            strcpy(train,"LA City Express");
-            strcpy(station,"Boston Station");
-            time1 = 8;
-            time2 = 00;
+        case 1003:
+		 {
+            
             a1 = 1801;
             a2 = 981;
   
@@ -247,11 +230,9 @@ void details()
             d = cal(a1, a2, j);
             printf("Total Bill Amount: Rs %d\n", d);
         } break;
-        case 1004: {
-            strcpy(train,"LA City Express");
-            strcpy(station,"LA Station");
-            time1 = 13;
-            time2 = 10;
+        case 1004:
+		 {
+        
            	a1 = 1801;
             a2 = 981;
   
@@ -260,11 +241,9 @@ void details()
             d = cal(a1, a2, j);
             printf("Total Bill Amount: Rs %d\n", d);
         } break;
-        case 1005: {
-            strcpy(train, "Iron City Express");
-            strcpy(station, "Boston Station");
-            time1 = 7;
-            time2 = 00;
+        case 1005:
+		 {
+        
             a1 = 2199;
             a2 = 1780;
   
@@ -273,11 +252,9 @@ void details()
             d = cal(a1, a2, j);
             printf("Total Bill Amount: Rs %d\n", d);
         } break;
-        case 1006: {
-            strcpy(train, "Iron City Express");
-            strcpy(station, "Chicago Station");
-            time1 = 11;
-            time2 = 05;
+        case 1006:
+		 {
+    
             a1 = 2199;
             a2 = 1780;
   	
@@ -286,11 +263,8 @@ void details()
             d = cal(a1, a2, j);
             printf("Total Bill Amount: Rs %d\n", d);
         } break;
-        case 1007: {
-            strcpy(train, "Keystone Express");
-            strcpy(station, "Boston Station");
-            time1 = 13;
-            time2 = 00;
+        case 1007: 
+		{
             a1 = 1759;
             a2 = 1200;
   
@@ -299,11 +273,8 @@ void details()
             d = cal(a1, a2, j);
             printf("Total Bill Amount: Rs %d\n", d); 
         } break;
-        case 1008: {
-            strcpy(train, "Keystone Express");
-            strcpy(station, "Washington Station");
-            time1 = 17;
-            time2 = 15;
+        case 1008:
+		 {
             a1 = 1759;
             a2 = 1200;
   
@@ -312,11 +283,8 @@ void details()
             d = cal(a1, a2, j);
             printf("Total Bill Amount: Rs %d\n", d); 
         } break;
-        case 1009: {
-            strcpy(train, "Meteor Express");
-            strcpy(station, "Boston Station");
-            time1 = 15;
-            time2 = 35;
+        case 1009: 
+		{
             a1 = 2205;
             a2 = 1905;
   
@@ -325,11 +293,8 @@ void details()
             d = cal(a1, a2, j);
             printf("Total Bill Amount: Rs %d\n", d);
         } break;
-        case 1010: {
-            strcpy(train, "Meteor Express");
-            strcpy(station, "Miami Station");
-            time1 = 18;
-            time2 = 20;
+        case 1010:
+		 {
            	a1 = 2205;
             a2 = 1905;
   
@@ -344,6 +309,7 @@ void details()
         }
     } while (x);
     bp.bill_amt=d;
+	//fseek(fq,0, SEEK_END);
     fwrite(&bp,sizeof(bp),1,fq);
     printf("\n *****For Booking Seats*****\n");
     // Calling seat() function with number of passenger
@@ -374,75 +340,69 @@ void details()
 	getch();
 }
 
-int getUniqueID()  
-{  
-    static int ID=0;  
-    return ++ID;  
-}
-
 
 /*********************************************PRINTTICKET()*************************************************/
 										// Code for printing receipt
 void bill()
 {
     char confirm;
-    long int recsize;
+    long int recsize,recsize1;
     time_t currentTime;
     time(&currentTime);
-    int i,c;
+    int i,c,reID;
     FILE *fp,*fq;
 	fp=fopen("Railway_Reservation.txt","r+");
-    if (fp==NULL)
-    {
-       fp=fopen("Railway_Reservation.txt","w+");
-
-       if (fp==NULL)
+	if(fp==NULL)
 	{
 	   puts("File cannot be opened ");
 	   exit(0);
-	}
 	}
 	fq=fopen("Railway_Reservation1.txt","r+");
     if (fq==NULL)
     {
-       fq=fopen("Railway_Reservation1.txt","w+");
-
-       if (fq==NULL)
-	{
 	   puts("File cannot be opened ");
 	   exit(0);
 	}
-	}
-	printf("Enter the number of passengers: ");
-	scanf("%d",&j);
-	fread(&pd1,sizeof(pd1),1,fp);
-	fread(&bp,sizeof(bp),1,fq);
-	fseek(fp,0, SEEK_END);
-	fseek (fp,-recsize,SEEK_CUR);
-	fseek(fq,0, SEEK_END);
-	fseek (fq,-recsize,SEEK_CUR);
-    printf("*********************** YOUR RECEIPT ****************************");
-    for (i = 0; i < j; i++) 
+	system("cls");
+	
+	recsize=sizeof(passdetails);
+	
+	recsize1=sizeof(bp);
+	//fseek(fp,0, SEEK_END);
+	//fseek(fq,0, SEEK_END);
+	printf("Enter the receipt ID of passenger: ");
+	fflush(stdin);
+	scanf("%d",&reID);
+    printf("\n\n*********************** YOUR RECEIPT ****************************");
+	while(fread(&passdetails,recsize,1,fp)>0)
 	{
-        printf("\t\t\n\nPassenger %d Name: ", i+1);
-        puts(pd1[i].val);
-        printf("\t\t\nPassenger %d Gender: ", i+1);
-        puts(pd1[i].gender);
-        printf("\t\t\nPassenger %d Age: %d", i+1,pd1[i].ag);
+		if(reID == passdetails.RID)
+		{
+    		printf("\t\t\n\nPassenger Name: ");
+    		puts(passdetails.val);
+    		printf("\t\t\nPassenger Gender: ");
+    		puts(passdetails.gender);
+    		printf("\t\t\nPassenger Age: %d",passdetails.ag);
         
-        printf("\t\t\n\nPassenger %d Phone Number %.1lf",i+1,pd1[i].Phno);
+    		printf("\t\t\n\nPassenger Phone Number %.1lf",passdetails.Phno);
         
-        printf("\t\t\n\nPassenger %d Date Of Reservation %d/%d/%d",i+1,pd1[i].d,pd1[i].m,pd1[i].year);
+    		printf("\t\t\n\nPassenger Date Of Reservation %d/%d/%d",passdetails.d,passdetails.m,passdetails.year);
         
-        printf("\t\t\n\nPassenger %d's Unique ID(UID) is %.1lf",i+1,pd1[i].UID);
+    		printf("\t\t\n\nPassenger's Unique ID(UID) is %.1lf",passdetails.UID);
+ 		}
+	}
+	while(fread(&bp,recsize1,1,fq)>0)
+	{
+		if(reID == bp.RID1)
+		{
+    		printf("\t\t\n\nReceipt Id -: %d",bp.RID1);
         
-    }
-    printf("\t\t\n\nReceipt Id -: %d",bp.RID1);
-        
-    printf("\t\t\n\nTotal Bill amount -: Rs %d",bp.bill_amt);
-    
+    		printf("\t\t\n\nTotal Bill amount -: Rs %d",bp.bill_amt);
+		}	
+	}
     printf("\t\t\n\nTime : %s",ctime(&currentTime));
     printf("\n");
+    
     printf("\n\nConfirm Ticket (y/n):>");
 	start:
 	scanf(" %c",&confirm);
@@ -464,9 +424,9 @@ void bill()
 			goto start;
 		}
 	}
+	getch();
 	fclose(fp);
 	fclose(fq);
-	getch();
 }
 	
 int cal(int y1, int y2, int h)
@@ -624,7 +584,7 @@ void viewdetails(void)
 // Function for chosing seats
 int seat(int p)
 {
-    int i;
+    int i,a[50],j[50];
     printf("\t           -:SEAT MATRIX:-        \n");
     printf("\t(U)    (M)        (L)    (L)    "
            "    (U)\n\n");
@@ -652,9 +612,18 @@ int seat(int p)
            "55\n\n");
     printf("\t56    57        58\t59        "
            "60\n");
+    top2:
     printf("\n\n\tEnter Seat Numbers: ");
     for (i = 0; i < p; i++)
+    {
         scanf("%d", &a[i]);
+        if(j[i]==a[i])
+        {
+        	printf("Sorry, The seat is already taken");
+        	goto top2;
+		}
+        j[i]=a[i];
+    }
 }
 /*********************************************Function for Cancel Menu()*************************************************/
 void cancel(void)
@@ -681,7 +650,7 @@ void cancel(void)
 	scanf("%d",&recpID); 
 	fread(&bp,sizeof(bp),1,fq);
 	rewind(fq);
-   	while(fread(&bp,recsize,1, fq)>0)
+   	while(fread(&bp,sizeof(bp),1, fq)>0)
    	{
    		if(recpID == bp.RID1)
    		{
@@ -700,83 +669,66 @@ void cancel(void)
 	{
 		printf("\nYour reservation is cancelled successfully.");
 	}
-		fclose(fq);
 	getch();
+	fclose(fq);
 }
 
 /*********************************************Function for Search Menu()*************************************************/
 
 void search()
 {
-	int i,j,recID;
+	system("cls");
+	int i,j,recID,x;
 	long int recsize;
 	FILE *fp,*fq;
 	fp=fopen("Railway_Reservation.txt","r+");
     if (fp==NULL)
     {
-       fp=fopen("Railway_Reservation.txt","w+");
-
-       if (fp==NULL)
-	{
 	   puts("File cannot be opened ");
 	   exit(0);
-	}
 	}
 	fq=fopen("Railway_Reservation1.txt","r+");
     if (fq==NULL)
     {
-       fq=fopen("Railway_Reservation1.txt","w+");
-
-       if (fq==NULL)
-	{
 	   puts("File cannot be opened ");
 	   exit(0);
 	}
-	}
-	printf("Enter the receipt ID of the passenger to search for the detail: ");
+	
+	fread(&bp,sizeof(bp),1, fq);
+	printf("*********************** YOUR SEARCH DETAILS ****************************");
+	printf("\n\nEnter the receipt ID of the passenger: ");
 	fflush(stdin);
 	scanf("%d",&recID);
-	printf("Enter the number of passengers: ");
-	fflush(stdin);
-	scanf("%d",&j);
-	fread(&pd1,sizeof(pd1),1,fp);
-	fread(&bp,sizeof(bp),1,fq);
-    printf("*********************** YOUR SEARCH DETAILS ****************************");
-    rewind(fp);
-	while(fread(&pd1,recsize,1, fp)>0)
+	while(fread(&pd1,sizeof(pd1),1,fp) > 0)
 	{
-		if(recID == pd2.RID)
+		if(recID == passdetails.RID)
 		{
-			fseek (fp,-recsize,SEEK_CUR);
-    		for (i = 0; i < j; i++) 
-			{
-      	 		printf("\t\t\n\nPassenger %d Name: ", i+1);
-      	  		puts(pd1[i].val);
-      	  		printf("\t\t\nPassenger %d Gender: ", i+1);
-      	 		puts(pd1[i].gender);
-	      	 	printf("\t\t\nPassenger %d Age: %d", i+1,pd1[i].ag);
+			x=1;
+      		printf("\t\t\n\nPassenger Name: ");
+      		puts(pd1.val);
+      		printf("\t\t\nPassenger  Gender: ");
+      		puts(pd1.gender);
+	    	printf("\t\t\nPassenger Age: %d",pd1.ag);
 	      	  
-      	 		printf("\t\t\n\nPassenger %d Phone Number %.1lf",i+1,pd1[i].Phno);
+      		printf("\t\t\n\nPassenger Phone Number %.1lf",pd1.Phno);
      	   
-      	 		printf("\t\t\n\nPassenger %d Date Of Reservation %d/%d/%d",i+1,pd1[i].d,pd1[i].m,pd1[i].year);
+      		printf("\t\t\n\nPassenger's' Date Of Reservation %d/%d/%d",i+1,pd1.d,pd1.m,pd1.year);
         
-      	 		printf("\t\t\n\nPassenger %d's Unique ID(UID) is %.1lf",i+1,pd1[i].UID);
-        
-   	 		}
-   		}
-   	}
-   	rewind(fq);
-   	while(fread(&bp,recsize,1, fq)>0)
-   	{
-   		if(recID == bp.RID1)
-   		{
-   			fseek (fq,-recsize,SEEK_CUR);
-   			printf("\t\t\n\nReceipt Id -: %d",bp.RID1);
-        
-   			printf("\t\t\n\nTotal Bill amount -: Rs %d",bp.bill_amt);
-   		}
+      		printf("\t\t\n\nPassenger's Unique ID(UID) is %.1lf",pd1.UID);
+    	}
+    }
+	if(x!=1)
+	{
+		printf("\nSorry,there is no record of the Receipt ID you entered!");
 	}
-  	fclose(fp);
+   	
+   	if(recID == bp.RID1)
+   	{
+   		printf("\t\t\n\nReceipt Id -: %d",bp.RID1);
+        
+   		printf("\t\t\n\nTotal Bill amount -: Rs %d",bp.bill_amt);
+   	}
+	fclose(fp);
 	fclose(fq);
 	getch();
 }
@@ -834,5 +786,4 @@ void login()
 
 
               
-
 
