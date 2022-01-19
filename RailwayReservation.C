@@ -349,7 +349,7 @@ void bill()
     long int recsize,recsize1;
     time_t currentTime;
     time(&currentTime);
-    int i,c,reID;
+    int i,c,reID,x;
     FILE *fp,*fq;
 	fp=fopen("Railway_Reservation.txt","r+");
 	if(fp==NULL)
@@ -370,14 +370,21 @@ void bill()
 	recsize1=sizeof(bp);
 	//fseek(fp,0, SEEK_END);
 	//fseek(fq,0, SEEK_END);
-	printf("Enter the receipt ID of passenger: ");
-	fflush(stdin);
+	top5:
+		
+	printf("\n\nEnter the receipt ID of passenger: ");
 	scanf("%d",&reID);
+	fflush(stdin);
+	
+	rewind(fp);
+	rewind(fq);
     printf("\n\n*********************** YOUR RECEIPT ****************************");
+    
 	while(fread(&passdetails,recsize,1,fp)>0)
 	{
 		if(reID == passdetails.RID)
 		{
+			x=1;
     		printf("\t\t\n\nPassenger Name: ");
     		puts(passdetails.val);
     		printf("\t\t\nPassenger Gender: ");
@@ -399,6 +406,11 @@ void bill()
         
     		printf("\t\t\n\nTotal Bill amount -: Rs %d",bp.bill_amt);
 		}	
+	}
+	if(x!=1)
+	{
+		printf("\nSorry there is no record of the entered Receipt ID.\n\nPlease enter a Valid Receipt ID");
+		goto top5;
 	}
     printf("\t\t\n\nTime : %s",ctime(&currentTime));
     printf("\n");
@@ -679,7 +691,7 @@ void search()
 {
 	system("cls");
 	int i,j,recID,x;
-	long int recsize;
+	long int resize,resize1;
 	FILE *fp,*fq;
 	fp=fopen("Railway_Reservation.txt","r+");
     if (fp==NULL)
@@ -694,43 +706,56 @@ void search()
 	   exit(0);
 	}
 	
-	fread(&bp,sizeof(bp),1, fq);
-	printf("*********************** YOUR SEARCH DETAILS ****************************");
+	resize=sizeof(passdetails);
+	
+	resize1=sizeof(bp);
+	
+	flag5:
+		
 	printf("\n\nEnter the receipt ID of the passenger: ");
 	fflush(stdin);
 	scanf("%d",&recID);
-	while(fread(&pd1,sizeof(pd1),1,fp) > 0)
+	
+	rewind(fp);
+	rewind(fq);
+	printf("*********************** YOUR SEARCH DETAILS ****************************");
+	
+	while(fread(&passdetails,resize,1,fp)>0)
 	{
 		if(recID == passdetails.RID)
 		{
 			x=1;
-      		printf("\t\t\n\nPassenger Name: ");
-      		puts(pd1.val);
-      		printf("\t\t\nPassenger  Gender: ");
-      		puts(pd1.gender);
-	    	printf("\t\t\nPassenger Age: %d",pd1.ag);
-	      	  
-      		printf("\t\t\n\nPassenger Phone Number %.1lf",pd1.Phno);
-     	   
-      		printf("\t\t\n\nPassenger's' Date Of Reservation %d/%d/%d",i+1,pd1.d,pd1.m,pd1.year);
+    		printf("\t\t\n\nPassenger Name: ");
+    		puts(passdetails.val);
+    		printf("\t\t\nPassenger Gender: ");
+    		puts(passdetails.gender);
+    		printf("\t\t\nPassenger Age: %d",passdetails.ag);
         
-      		printf("\t\t\n\nPassenger's Unique ID(UID) is %.1lf",pd1.UID);
-    	}
-    }
+    		printf("\t\t\n\nPassenger Phone Number %.1lf",passdetails.Phno);
+        
+    		printf("\t\t\n\nPassenger Date Of Reservation %d/%d/%d",passdetails.d,passdetails.m,passdetails.year);
+        
+    		printf("\t\t\n\nPassenger's Unique ID(UID) is %.1lf",passdetails.UID);
+ 		}
+	}
 	if(x!=1)
 	{
-		printf("\nSorry,there is no record of the Receipt ID you entered!");
+		printf("\nSorry there is no record of the entered Receipt ID.\n\nPlease enter a Valid Receipt ID");
+		goto flag5;
 	}
-   	
-   	if(recID == bp.RID1)
-   	{
-   		printf("\t\t\n\nReceipt Id -: %d",bp.RID1);
+	while(fread(&bp,resize1,1,fq)>0)
+	{
+		if(recID == bp.RID1)
+		{
+    		printf("\t\t\n\nReceipt Id -: %d",bp.RID1);
         
-   		printf("\t\t\n\nTotal Bill amount -: Rs %d",bp.bill_amt);
-   	}
+    		printf("\t\t\n\nTotal Bill amount -: Rs %d",bp.bill_amt);
+		}	
+	}
+	getch();
 	fclose(fp);
 	fclose(fq);
-	getch();
+	
 }
 /*********************************************Function for Login Menu()*************************************************/
 void login()
