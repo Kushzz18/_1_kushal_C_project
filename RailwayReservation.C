@@ -373,8 +373,8 @@ void bill()
 	top5:
 		
 	printf("\n\nEnter the receipt ID of passenger: ");
-	scanf("%d",&reID);
 	fflush(stdin);
+	scanf("%d",&reID);
 	
 	rewind(fp);
 	rewind(fq);
@@ -596,7 +596,7 @@ void viewdetails(void)
 // Function for chosing seats
 int seat(int p)
 {
-    int i,a[50],j[50];
+    int i,a[50],k[50];
     printf("\t           -:SEAT MATRIX:-        \n");
     printf("\t(U)    (M)        (L)    (L)    "
            "    (U)\n\n");
@@ -629,12 +629,12 @@ int seat(int p)
     for (i = 0; i < p; i++)
     {
         scanf("%d", &a[i]);
-        if(j[i]==a[i])
+        if(k[i]==a[i])
         {
         	printf("Sorry, The seat is already taken");
         	goto top2;
 		}
-        j[i]=a[i];
+        k[i]=a[i];
     }
 }
 /*********************************************Function for Cancel Menu()*************************************************/
@@ -655,25 +655,29 @@ void cancel(void)
 	   exit(0);
 	}
 	}
-	printf("\n\n---------Cancel a Ticket----------\n"); 
+	recsize= sizeof(bp);
+
 	top:
 	printf("\nEnter the receipt id to cancel the ticket: "); 
 	fflush(stdin);
 	scanf("%d",&recpID); 
-	fread(&bp,sizeof(bp),1,fq);
+
 	rewind(fq);
-   	while(fread(&bp,sizeof(bp),1, fq)>0)
+	
+	printf("\n\n---------Cancel a Ticket----------\n"); 
+	
+   	while(fread(&bp,recsize,1, fq)>0)
    	{
    		if(recpID == bp.RID1)
    		{
    			status=0;
-   			fseek(fq,-recsize,SEEK_CUR);
+   			printf("\n\nYour Total Bill Amount is :- Rs %d",bp.bill_amt);
    			cancelp= bp.bill_amt- (bp.bill_amt * (10/100));
-   			printf("\nThe amount you get after cancellation charge is %d -:",cancelp);
+   			printf("\n\nThe amount you get after cancellation charge is %d -:",cancelp);
    		}
    		else
    		{
-   			printf("Please enter a valid receipt ID");
+   			printf("\n\nPlease enter a valid receipt ID");
    			goto top;
 		}
 	}
