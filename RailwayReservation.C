@@ -640,9 +640,9 @@ int seat(int p)
 /*********************************************Function for Cancel Menu()*************************************************/
 void cancel(void)
 {
-	int recpID,cancelp,status;
-	system("cls");
-	long int recsize;
+	int recpID,status;
+	float cancelp;
+	long int recsize1;
 	FILE *fq;
 	fq=fopen("Railway_Reservation1.txt","r+");
     if (fq==NULL)
@@ -655,10 +655,10 @@ void cancel(void)
 	   exit(0);
 	}
 	}
-	recsize= sizeof(bp);
-
+	recsize1= sizeof(bp);
+	system("cls");
 	top:
-	printf("\nEnter the receipt id to cancel the ticket: "); 
+	printf("\n\nEnter the receipt id to cancel the ticket: "); 
 	fflush(stdin);
 	scanf("%d",&recpID); 
 
@@ -666,24 +666,24 @@ void cancel(void)
 	
 	printf("\n\n---------Cancel a Ticket----------\n"); 
 	
-   	while(fread(&bp,recsize,1, fq)>0)
+   	while(fread(&bp,recsize1,1,fq)>0)
    	{
    		if(recpID == bp.RID1)
    		{
    			status=0;
    			printf("\n\nYour Total Bill Amount is :- Rs %d",bp.bill_amt);
-   			cancelp= bp.bill_amt- (bp.bill_amt * (10/100));
-   			printf("\n\nThe amount you get after cancellation charge is %d -:",cancelp);
+   			cancelp= bp.bill_amt - bp.bill_amt * 0.15 ;
+   			printf("\n\nThe amount you get after cancellation charge is -: Rs %.2f",cancelp);
    		}
-   		else
+	}
+	if (status != 0)
    		{
    			printf("\n\nPlease enter a valid receipt ID");
    			goto top;
 		}
-	}
 	if(status == 0) 
 	{
-		printf("\nYour reservation is cancelled successfully.");
+		printf("\n\nYour reservation is cancelled successfully.");
 	}
 	getch();
 	fclose(fq);
