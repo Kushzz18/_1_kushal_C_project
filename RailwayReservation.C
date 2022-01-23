@@ -30,8 +30,7 @@ struct billpay
 /*******************************************FUNCTION PROTOTYPE**********************************************************/
 									//function prototypes to be used	
 									
-void details(void); 										//main reservation function
-void details1(int);										//main reservation function				
+void details(void); 										//main reservation function										//main reservation function				
 int seat(int);
 int cal(int, int, int);
 void bill(); 
@@ -40,7 +39,7 @@ void specifictrain(void);											//print data related to specific train
 void login();
 void cancel(void);	
 void search(void);
-int getUniqueID();  
+
 					
 
 /******************************************FUNCTION DECLARATION**********************************************************/
