@@ -7,6 +7,7 @@
 /*******************************************GLOBAL VARIABLES**********************************************************/
 //ALl the globle variables and the composite data types will be declared here
 // Global variables
+
 char source[20], des[20], train[40];
 char station[40], cla[40];
 int time1, time2, a[55];
